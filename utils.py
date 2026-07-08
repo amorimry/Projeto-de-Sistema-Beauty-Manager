@@ -42,7 +42,7 @@ def cadastrar_cliente(lista):
     cpfs = []
 
     for c in lista:
-        if c.cpf not in lista:
+        if c.cpf not in cpfs:
             cpfs.append(c.cpf)
 
     # print (cpfs)
