@@ -1,10 +1,85 @@
 from classes import Cliente, Servico, Agendamento
 
-def cadastrar_cliente():
-    nome = input("Digite o nome do cliente: ")
-    telefone = input("Digite o número do telefone do cliente: ")
-    cpf = input("Digite o CPF do cliente: ")
-    email = input("Digite o e-mail do cliente: ")
+# def salvar_nomes(lista1, lista2, lista3):
+#     nomes_clientes = []
+#     cpfs = []
+#     servicos = []
+#     data_agendamento = []
+#     horario_agendamento = []
+
+#     for n in lista1:
+#         if len(nomes_clientes) == 0:
+#             nomes_clientes.append(n.nome)
+#         if len(nomes_clientes) > 0:
+#             if n not in nomes_clientes:
+#                 nomes_clientes.append(n.nome)
+#     for c in lista1:
+#         if len(cpfs) == 0:
+#             cpfs.append(c.cpf)
+#         if len(cpfs) > 0:
+#             if c not in cpfs:
+#                 cpfs.append(c.cpf)
+#     for s in lista2:
+#         if len(servicos) == 0:
+#             servicos.append(s.nome)
+#         if len(servicos) > 0:
+#             if s not in servicos:
+#                 servicos.append(s.nome)
+#     for d in lista3:
+#         if len(data_agendamento) == 0:
+#             data_agendamento.append(d.data)
+#         if len(data_agendamento) > 0:
+#             if d not in data_agendamento:
+#                 data_agendamento.append(d.data)
+#     for h in lista3:
+#         if len(horario_agendamento) == 0:
+#             horario_agendamento.append(h.horario)
+#         if len(horario_agendamento) > 0:
+#             if h not in horario_agendamento:
+#                 horario_agendamento.append(h.horario)
+
+def cadastrar_cliente(lista):
+    cpfs = []
+
+    for c in lista:
+        if len(cpfs) == 0:
+            cpfs.append(c.cpf)
+        if len(cpfs) > 0:
+            if c not in cpfs:
+                cpfs.append(c.cpf)
+
+    # print (cpfs)
+
+    while True:
+        nome = input("Digite o nome do cliente: ")
+        if nome == "":
+            print("Preeencha o campo NOME.")
+        else:
+            break
+    while True:
+        telefone = input("Digite o número do telefone do cliente: ")
+        if telefone == "":
+            print("Preeencha o campo TELEEFONE.")
+        elif len(telefone) != 11:
+            print("Digite um telefone válido.")
+        else:
+            break
+    while True:
+        cpf = input("Digite o CPF do cliente: ")
+        if cpf == "":
+            print("Preencha o campo CPF.")
+        elif len(cpf) != 11:
+            print("Digite um CPF válido.")
+        elif cpf in cpfs:
+            print("CPF já cadastrado no sistema.")
+        else:
+            break
+    while True:
+        email = input("Digite o e-mail do cliente: ")
+        if email == "":
+            print("Preencha o campo E-MAIL.")
+        else:
+            break
 
     return {
         "nome": nome.title,
@@ -14,14 +89,24 @@ def cadastrar_cliente():
     }
 
 def cadastrar_servico():
-    nome = input("Digite o nome do serviço: ")
+    while True:
+        nome = input("Digite o nome do serviço: ")
+        if nome == "":
+            print("Preeencha o campo NOME DO SERVIÇO.")
+        else:
+            break
     while True:
         valor = float(input("Digite o valor do serviço: "))
-        if valor > 0:
-            break
-        else:
+        if valor <= 0:
             print("Valor inválido, digite novamente.")
-    duracao = input("Digite a duração, em minutos, do serviço: ")
+        else:
+            break
+    while True:
+        duracao = input("Digite a duração, em minutos, do serviço: ")
+        if duracao == "":
+            print("Preencha o campo DURAÇÃO.")
+        else:
+            break
 
     return {
         "nome": nome,

@@ -6,7 +6,7 @@ lista_clientes = [
     Cliente("Bruno Souza", "85963247561", "03641251478", "bruno.souza@email.com"),
     Cliente("Carla Oliveira", "85965234475", "09547852315", "carla.oliveira@email.com"),
     Cliente("Diego Santos", "85965554782", "56474123058", "diego.santos@email.com"),
-    Cliente("Elena Costa", "8596322541", "65874123584", "elena.costa@email.com")
+    Cliente("Elena Costa", "85963225541", "65874123584", "elena.costa@email.com")
 ]
 lista_servicos = [
     Servico("Corte Feminino", 80.0, "45"),
@@ -43,7 +43,7 @@ while True:
         print(f"""
 {"="*5} Cadastrar Cliente {"="*5}
 """)
-        dados_cliente = utils.cadastrar_cliente() #cadastra meu cliente, pelo utils, e me retorna o cliente com as informações em uma lista, jogando dentro da variável dados_cliente
+        dados_cliente = utils.cadastrar_cliente(lista_clientes) #cadastra meu cliente, pelo utils, e me retorna o cliente com as informações em uma lista, jogando dentro da variável dados_cliente
 
         novo_cliente = Cliente(
             dados_cliente["nome"],
