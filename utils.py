@@ -114,7 +114,11 @@ def agendar_atendimento(lista1, lista2, lista3):
             print("Preencha o campo.")
             continue
         else:
-            cliente_agendamento = int(cliente_agendamento)
+            try:
+                cliente_agendamento = int(cliente_agendamento)
+            except ValueError:
+                print("Digite um número válido.")
+                continue
             indice_cliente = cliente_agendamento-1
 
             if indice_cliente >= 0 and indice_cliente < len(nomes_clientes):
@@ -136,10 +140,14 @@ def agendar_atendimento(lista1, lista2, lista3):
             print("Preencha o campo.")
             continue
         else:
-            servico_agendamento = int(servico_agendamento)
+            try:
+                servico_agendamento = int(servico_agendamento)
+            except ValueError:
+                print("Digite um número válido.")
+                continue
             indice_servico = servico_agendamento-1
 
-            if indice_servico >= 0 and indice_servico <= len(nomes_servicos):
+            if 0 <= indice_servico < len(nomes_servicos):
                 data_agendamento = input("Digite a data para o serviço (dd/mm/aaaa): ")
                 horario_agendamento = input("Digite o horário do agendamento (hh:mm): ")
                 for dh in lista3:
@@ -148,40 +156,60 @@ def agendar_atendimento(lista1, lista2, lista3):
                         return None
                 print("Agendamento finalizado!")
                 return {
-                        "cliente": lista1[indice_cliente],
-                        "serviço": lista2[indice_servico],
-                        "data": data_agendamento,
-                        "horário": horario_agendamento
-                        }
+                    "cliente": lista1[indice_cliente],
+                    "serviço": lista2[indice_servico],
+                    "data": data_agendamento,
+                    "horário": horario_agendamento
+                }
             else:
                 print("Serviço não encontrado, digite novamente.")                
 
 def remover_agendamento(lista):
+    if not lista:
+        print("Não há agendamentos para remover.")
+        return
+
     while True:
         agendamento_selecionado = input("Digite o número do agendamento que deseja remover: ")
         if agendamento_selecionado == "":
             print("Preencha o campo.")
-        else:
-            agendamento_selecionado = int(agendamento_selecionado)
-            indice_agendamento = agendamento_selecionado-1
-            break
+            continue
 
+        try:
+            agendamento_selecionado = int(agendamento_selecionado)
+        except ValueError:
+            print("Digite um número válido.")
+            continue
+
+        indice_agendamento = agendamento_selecionado - 1
+        if 0 <= indice_agendamento < len(lista):
+            break
+        print("Número inválido, tente novamente.")
+
+    agendamento_obj = lista[indice_agendamento]
     print("Deseja mesmo remover o agendamento abaixo?")
-    agendamento_selecionado.exibir_agendamento()
+    agendamento_obj.exibir_agendamento()
 
     while True:
         escolha = input("""
-    1. Sim
-    2. Não
+1. Sim
+2. Não
 Digite o número da sua escolha: """)
         if escolha == "":
             print("Digite uma opção válida.")
-        else:
+            continue
+
+        try:
             escolha = int(escolha)
-            if escolha == 1:
-                lista.pop(indice_agendamento)
-                print("Agendamento cancelado com sucesso.")
-                break
-            elif escolha == 2:
-                print("Agendamento NÃO cancelado.")
-                break
+        except ValueError:
+            print("Digite um número válido.")
+            continue
+
+        if escolha == 1:
+            lista.pop(indice_agendamento)
+            print("Agendamento cancelado com sucesso.")
+            break
+        if escolha == 2:
+            print("Agendamento NÃO cancelado.")
+            break
+        print("Opção inválida, tente novamente.")

@@ -115,10 +115,10 @@ while True:
         input("Digite Enter...")
 
     elif op == "0":
-        print("Encenrrando programa, até breve!")
+        print("Encerrando programa, até breve!")
         break
     else:
-        print("Opcão inválida, digite novamente.")
+        print("Opção inválida, digite novamente.")
 
         input("Digite Enter...")
 

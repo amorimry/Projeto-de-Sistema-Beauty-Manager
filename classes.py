@@ -30,10 +30,13 @@ Duração em minutos: {self.duracao} min.
 
 class Agendamento():
     def __init__(self, cliente_objeto, servico_objeto, data, horario):
-        self.cliente = cliente_objeto  
-        self.servico = servico_objeto  
+        self.cliente = cliente_objeto
+        self.servico = servico_objeto
         self.data = data
         self.horario = horario
+
+    def exibir_agendamento(self):
+        print(str(self))
 
     def __str__(self):
         return f"""
