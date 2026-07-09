@@ -29,17 +29,17 @@ Duração em minutos: {self.duracao} min.
 """)
 
 class Agendamento():
-    def __init__(self, cliente, servico, data, horario):
-        self.cliente = cliente
-        self.servico = servico
+    def __init__(self, cliente_objeto, servico_objeto, data, horario):
+        self.cliente = cliente_objeto  
+        self.servico = servico_objeto  
         self.data = data
         self.horario = horario
 
-    def exibir_agendamento(self):
-        print(f"""
-    == Agendamento ==
-Cliente: {self.cliente}
-Serviço: {self.servico}
-Data: {self.data}
-Horário: {self.horario}H
-""")
+    def __str__(self):
+        return f"""
+    == Agendamento Completo ==
+Cliente: {self.cliente.nome} | Telefone: {self.cliente.telefone}
+Serviço: {self.servico.nome} | Valor: R$ {self.servico.valor:.2f}
+
+Data: {self.data} | Horário: {self.horario}H
+"""

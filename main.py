@@ -16,11 +16,11 @@ lista_servicos = [
     Servico("Hidratação", 120.0, "60")
 ]
 lista_agendamentos = [
-    Agendamento("Ana Silva", "Corte Feminino", "10/07/2026", "09:00"),
-    Agendamento("Bruno Souza", "Hidratação", "10/07/2026", "10:00"),
-    Agendamento("Carla Oliveira", "Manicure", "11/07/2026", "14:00"),
-    Agendamento("Diego Santos", "Pedicure", "11/07/2026", "15:00"),
-    Agendamento("Elena Costa", "Escova", "12/07/2026", "11:30")
+    Agendamento(lista_clientes[2], lista_servicos[0], "10/07/2026", "10:00"),
+    Agendamento(lista_clientes[0], lista_servicos[4], "10/07/2026", "09:00"),
+    Agendamento(lista_clientes[4], lista_servicos[2], "11/07/2026", "14:00"),
+    Agendamento(lista_clientes[1], lista_servicos[1], "11/07/2026", "15:00"),
+    Agendamento(lista_clientes[3], lista_servicos[3], "12/07/2026", "11:30")
 ]
 
 print(f"""
@@ -43,18 +43,20 @@ while True:
         print(f"""
 {"="*5} Cadastrar Cliente {"="*5}
 """)
-        dados_cliente = utils.cadastrar_cliente(lista_clientes) #cadastra meu cliente, pelo utils, e me retorna o cliente com as informações em uma lista, jogando dentro da variável dados_cliente
+        dados_cliente = utils.cadastrar_cliente(lista_clientes)
 
         novo_cliente = Cliente(
             dados_cliente["nome"],
             dados_cliente["telefone"],
             dados_cliente["cpf"],
             dados_cliente["email"]
-        ) #passo a instanciar o meu cliente colocando ele em uma classe, pego uma variável qualquer, chamo a classe dele e depois passo a puxar os dados da lista para cada informação que minha classe precisa
+        )
 
         lista_clientes.append(novo_cliente)
 
-        print("Cliente cadastrado com sucesso!")
+        print("""
+    -- Cliente cadastrado com sucesso!
+""")
   
     elif op == "2":
         print(f"""
@@ -70,7 +72,9 @@ while True:
         
         lista_servicos.append(novo_servico)
 
-        print("Serviço cadastrado com sucesso!")
+        print("""
+    -- Serviço cadastrado com sucesso!
+""")
 
     elif op == "3":
         print(f"""
@@ -78,14 +82,16 @@ while True:
 """)
         dados_agendamento = utils.agendar_atendimento(lista_clientes, lista_servicos, lista_agendamentos)
 
-        novo_agendamento = Agendamento(
-            dados_agendamento["cliente"],
-            dados_agendamento["serviço"],
-            dados_agendamento["data"],
-            dados_agendamento["horário"]
-        )
+        if dados_agendamento is not None:
 
-        lista_agendamentos.append(novo_agendamento)
+            novo_agendamento = Agendamento(
+                dados_agendamento["cliente"],
+                dados_agendamento["serviço"],
+                dados_agendamento["data"],
+                dados_agendamento["horário"]
+            )
+
+            lista_agendamentos.append(novo_agendamento)
 
     elif op == "4":
         print(f"""
@@ -105,4 +111,5 @@ while True:
         break
     else:
         print("Opcão inválida, digite novamente.")
+
 input("Digite Enter...")

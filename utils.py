@@ -1,43 +1,5 @@
 from classes import Cliente, Servico, Agendamento
 
-# def salvar_nomes(lista1, lista2, lista3):
-#     nomes_clientes = []
-#     cpfs = []
-#     servicos = []
-#     data_agendamento = []
-#     horario_agendamento = []
-
-#     for n in lista1:
-#         if len(nomes_clientes) == 0:
-#             nomes_clientes.append(n.nome)
-#         if len(nomes_clientes) > 0:
-#             if n not in nomes_clientes:
-#                 nomes_clientes.append(n.nome)
-#     for c in lista1:
-#         if len(cpfs) == 0:
-#             cpfs.append(c.cpf)
-#         if len(cpfs) > 0:
-#             if c not in cpfs:
-#                 cpfs.append(c.cpf)
-#     for s in lista2:
-#         if len(servicos) == 0:
-#             servicos.append(s.nome)
-#         if len(servicos) > 0:
-#             if s not in servicos:
-#                 servicos.append(s.nome)
-#     for d in lista3:
-#         if len(data_agendamento) == 0:
-#             data_agendamento.append(d.data)
-#         if len(data_agendamento) > 0:
-#             if d not in data_agendamento:
-#                 data_agendamento.append(d.data)
-#     for h in lista3:
-#         if len(horario_agendamento) == 0:
-#             horario_agendamento.append(h.horario)
-#         if len(horario_agendamento) > 0:
-#             if h not in horario_agendamento:
-#                 horario_agendamento.append(h.horario)
-
 def cadastrar_cliente(lista):
     cpfs = []
 
@@ -79,7 +41,7 @@ def cadastrar_cliente(lista):
             break
 
     return {
-        "nome": nome.title,
+        "nome": nome.title(),
         "telefone": telefone,
         "cpf": cpf,
         "email": email
@@ -93,11 +55,15 @@ def cadastrar_servico():
         else:
             break
     while True:
-        valor = float(input("Digite o valor do serviço: "))
-        if valor <= 0:
-            print("Valor inválido, digite novamente.")
+        valor = input("Digite o valor do serviço: ")
+        if valor == "":
+            print("Preencha o campo VALOR.")
         else:
-            break
+            valor = float(valor)
+            if valor <= 0:
+                print("Valor inválido, digite novamente.")
+            else:
+                break
     while True:
         duracao = input("Digite a duração, em minutos, do serviço: ")
         if duracao == "":
@@ -106,68 +72,89 @@ def cadastrar_servico():
             break
 
     return {
-        "nome": nome,
+        "nome": nome.title(),
         "valor": valor,
         "duração": duracao
     }
 
-def exibir_clientes(lista):
-    for i, nome_cliente in enumerate(lista):
-        print(f"{i+1}. {nome_cliente.nome}\n")
+def exibir_clientes(lista_de_clientes):
+    nomes_clientes = []
+    for n in lista_de_clientes:
+        if n.nome not in nomes_clientes:
+            nomes_clientes.append(n.nome)
+            print(f"- {n.nome}\n")
 
-def exibir_servicos(lista):
-    for i, nome_servico in enumerate(lista):
-        print(f"{i+1}. {nome_servico.nome}\n")
+def exibir_servicos(lista_de_servicos):
+    nomes_servicos = []
+    for s in lista_de_servicos:
+        if s.nome not in nomes_servicos:
+            nomes_servicos.append(s.nome)
+            print(f"- {s.nome}\n")
 
 def exibir_agendamentos(lista):
     for i, agendamento in enumerate(lista):
-        print(f"""{i+1} - {agendamento.cliente} | {agendamento.servico}
-{agendamento.data} | {agendamento.horario}H\n""")
+        print(f"""{i+1}. {agendamento.cliente.nome} | {agendamento.servico.nome}
+
+{agendamento.data} | {agendamento.horario}H
+""")
 
 def agendar_atendimento(lista1, lista2, lista3):
-    nomes_clientes = []
-    nomes_servicos = []
 
-    print("== CLIENTES ==")
+    while True:
+        nomes_clientes  = []
+        print("== CLIENTES ==")
 
-    for nome_cliente in lista1:
-        print(f"- {nome_cliente.nome}\n")
-        nomes_clientes.append(nome_cliente.nome)
+        for i, n in enumerate(lista1):
+            if n.nome not in nomes_clientes:
+                nomes_clientes.append(n.nome)
+                print(f"{i+1}. {n.nome}\n")
 
-    cliente_agendamento = input("Digite o nome do cliente que deseja agendar um serviço: \n")
+        cliente_agendamento = input("Digite o número do cliente que deseja agendar um serviço: ")
+        if cliente_agendamento == "":
+            print("Preencha o campo.")
+            continue
+        else:
+            cliente_agendamento = int(cliente_agendamento)
+            indice_cliente = cliente_agendamento-1
 
-    if cliente_agendamento.title() in nomes_clientes:
+            if indice_cliente >= 0 and indice_cliente < len(nomes_clientes):
+                break
+            else:
+                print("Número de posição inválido, digite novamente.")
 
+    while True:
+        nomes_servicos = []
         print("== SERVIÇOS ==")
 
-        for nome_servico in lista2:
-            print(f"- {nome_servico.nome}\n")
-            nomes_servicos.append(nome_servico.nome)
+        for i, s in enumerate(lista2):
+            if s.nome not in nomes_servicos:
+                nomes_servicos.append(s.nome)
+                print(f"{i+1} {s.nome}\n")
         
-        servico_agendamento = input(f"Digite o nome do serviço que deseja agendar: \n")
-
-        if servico_agendamento.title() in nomes_servicos:
-            data_agendamento = input("Digite a dapa para o serviço (dd/mm/aaaa): \n")
-            horario_agendamento = input("Digite o horário do agendamento (hh:mm): \n")
-            for dh in lista3:
-                if dh.data == data_agendamento and dh.horario == horario_agendamento:
-                    print("Já existe agendamento para essa data e horário.")
-                    return
-
-            print("Agendamento finalizado!")
-
-            return {
-                "cliente": {cliente_agendamento.title},
-                "serviço": {servico_agendamento.title},
-                "data": {data_agendamento},
-                "horário": {horario_agendamento}
-            }
-
+        servico_agendamento = input(f"Digite o número do serviço que deseja agendar: ")
+        if servico_agendamento == "":
+            print("Preencha o campo.")
+            continue
         else:
-            print("Serviço não encontrado, digite novamente.")
-            
-    else:
-        print("Cliente não cadastrado no sistema, cadastre o cliente primeiro.")
+            servico_agendamento = int(servico_agendamento)
+            indice_servico = servico_agendamento-1
+
+            if indice_servico >= 0 and indice_servico <= len(nomes_servicos):
+                data_agendamento = input("Digite a data para o serviço (dd/mm/aaaa): ")
+                horario_agendamento = input("Digite o horário do agendamento (hh:mm): ")
+                for dh in lista3:
+                    if dh.data == data_agendamento and dh.horario == horario_agendamento:
+                        print("Já existe agendamento para essa data e horário.")
+                        return None
+                print("Agendamento finalizado!")
+                return {
+                        "cliente": lista1[indice_cliente],
+                        "serviço": lista2[indice_servico],
+                        "data": data_agendamento,
+                        "horário": horario_agendamento
+                        }
+            else:
+                print("Serviço não encontrado, digite novamente.")                
 
 def remover_agendamento(lista):
     op = int(input("Digite a posição do agendamento que deseja remover: "))
