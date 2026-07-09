@@ -157,13 +157,31 @@ def agendar_atendimento(lista1, lista2, lista3):
                 print("Serviço não encontrado, digite novamente.")                
 
 def remover_agendamento(lista):
-    op = int(input("Digite a posição do agendamento que deseja remover: "))
-    agendamento_selecionado = lista[op-1]
+    while True:
+        agendamento_selecionado = input("Digite o número do agendamento que deseja remover: ")
+        if agendamento_selecionado == "":
+            print("Preencha o campo.")
+        else:
+            agendamento_selecionado = int(agendamento_selecionado)
+            indice_agendamento = agendamento_selecionado-1
+            break
+
     print("Deseja mesmo remover o agendamento abaixo?")
     agendamento_selecionado.exibir_agendamento()
-    escolha = int(input("1. Sim\n2. Não\nDigite o número da sua escolha: "))
-    if escolha == 1:
-        lista.pop(op-1)
-        print("Agendamento cancelado com sucesso.")
-    elif escolha == 2:
-        print("Agendamento NÃO cancelado.")
+
+    while True:
+        escolha = input("""
+    1. Sim
+    2. Não
+Digite o número da sua escolha: """)
+        if escolha == "":
+            print("Digite uma opção válida.")
+        else:
+            escolha = int(escolha)
+            if escolha == 1:
+                lista.pop(indice_agendamento)
+                print("Agendamento cancelado com sucesso.")
+                break
+            elif escolha == 2:
+                print("Agendamento NÃO cancelado.")
+                break

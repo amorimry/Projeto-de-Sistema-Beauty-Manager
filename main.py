@@ -57,6 +57,7 @@ while True:
         print("""
     -- Cliente cadastrado com sucesso!
 """)
+        input("Digite Enter...")
   
     elif op == "2":
         print(f"""
@@ -75,6 +76,7 @@ while True:
         print("""
     -- Serviço cadastrado com sucesso!
 """)
+        input("Digite Enter...")
 
     elif op == "3":
         print(f"""
@@ -93,11 +95,15 @@ while True:
 
             lista_agendamentos.append(novo_agendamento)
 
+        input("Digite Enter...")
+
     elif op == "4":
         print(f"""
 {"="*5} Lista de Agendamentos {"="*5}
 """)
         utils.exibir_agendamentos(lista_agendamentos)
+
+        input("Digite Enter...")
 
     elif op == "5":
         print(f"""
@@ -106,10 +112,14 @@ while True:
         utils.exibir_agendamentos(lista_agendamentos)
         utils.remover_agendamento(lista_agendamentos)
 
+        input("Digite Enter...")
+
     elif op == "0":
         print("Encenrrando programa, até breve!")
         break
     else:
         print("Opcão inválida, digite novamente.")
+
+        input("Digite Enter...")
 
 input("Digite Enter...")
